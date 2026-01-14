@@ -22,21 +22,29 @@ import Liked from "./Pages/Liked";
 export const AuthContext = createContext();
 
 function App() {
-  // Initialize user from localStorage for persistence
+  // Initialize user: Check localStorage, otherwise default to GUEST
   const [user, setUser] = useState(() => {
     const saved = localStorage.getItem("nexus_user");
     return saved
       ? JSON.parse(saved)
-      : { name: "GUEST", email: "guest@nexus.core" };
+      : { name: "GUEST", email: "guest@nexus.core", isGuest: true };
   });
 
   const login = (userData) => {
-    setUser(userData);
-    localStorage.setItem("nexus_user", JSON.stringify(userData));
+    setUser({ ...userData, isGuest: false });
+    localStorage.setItem(
+      "nexus_user",
+      JSON.stringify({ ...userData, isGuest: false })
+    );
   };
 
   const logout = () => {
-    setUser({ name: "GUEST", email: "guest@nexus.core" });
+    const guestUser = {
+      name: "GUEST",
+      email: "guest@nexus.core",
+      isGuest: true,
+    };
+    setUser(guestUser);
     localStorage.removeItem("nexus_user");
   };
 
@@ -45,11 +53,20 @@ function App() {
       <Router>
         <LibraryProvider>
           <Routes>
+            {/* 1. Default Entry: Always show Login if they haven't logged in yet */}
+            {/* If user is GUEST, "/" shows LoginPage. If Logged in, goes to home */}
+            <Route
+              path="/"
+              element={
+                user?.isGuest ? <LoginPage /> : <Navigate to="/home" replace />
+              }
+            />
+
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
 
-            <Route path="/" element={<Layout />}>
-              <Route index element={<Navigate to="/home" replace />} />
+            {/* 2. Public Access Routes: Layout is accessible to GUEST and Logged-in users */}
+            <Route element={<Layout />}>
               <Route path="home" element={<HomePage />} />
               <Route path="explore" element={<Explore />} />
               <Route
@@ -91,8 +108,10 @@ function App() {
                 element={<CategoryPage title="AI Sector" category="AI" />}
               />
               <Route path="video/:id" element={<VideoDetail />} />
-              <Route path="*" element={<Navigate to="/home" replace />} />
             </Route>
+
+            {/* Catch-all */}
+            <Route path="*" element={<Navigate to="/home" replace />} />
           </Routes>
         </LibraryProvider>
       </Router>
