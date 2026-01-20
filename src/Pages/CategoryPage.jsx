@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+// Ensure this points to your new Sheety logic file
 import { fetchVideos } from "../api/mockapi";
 import VideoCard from "../Components/VideoCard";
 
@@ -14,7 +15,6 @@ const CategoryPage = ({ title, category }) => {
       setLoading(true);
       setError(null);
       try {
-        // We pass the category to the API
         const data = await fetchVideos(category);
         if (isMounted) setVideos(data || []);
       } catch (err) {
@@ -29,6 +29,9 @@ const CategoryPage = ({ title, category }) => {
       isMounted = false;
     };
   }, [category]);
+
+  // Clean the title: If title already includes "Sector", remove it so we don't double it
+  const cleanTitle = title?.toUpperCase().replace("SECTOR", "").trim();
 
   const Skeletons = () => (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -47,7 +50,8 @@ const CategoryPage = ({ title, category }) => {
       <header className="relative">
         <div className="flex items-baseline gap-3">
           <h2 className="text-3xl font-black tracking-tighter uppercase italic text-white">
-            {title} <span className="text-[#00F0FF]">Sector</span>
+            {/* We use cleanTitle here to prevent "Gaming Sector Sector" */}
+            {cleanTitle} <span className="text-[#00F0FF]">Sector</span>
           </h2>
           <span className="text-xs font-bold text-gray-500 uppercase tracking-widest">
             {videos.length} Transmissions
@@ -71,7 +75,9 @@ const CategoryPage = ({ title, category }) => {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {videos.length > 0 ? (
-            videos.map((video) => <VideoCard key={video.id} video={video} />)
+            videos.map((video) => (
+              <VideoCard key={video.id || video.title} video={video} />
+            ))
           ) : (
             <div className="col-span-full py-20 flex flex-col items-center justify-center text-center">
               <div className="w-16 h-16 bg-white/5 rounded-full mb-4 flex items-center justify-center">

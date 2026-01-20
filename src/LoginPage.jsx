@@ -140,6 +140,7 @@ const LoginPage = () => {
           className="flex items-center gap-4 group cursor-pointer"
           onClick={() => navigate("/")}
         >
+          {/* THIS IS THE LOGO ICON BOX */}
           <div className="w-11 h-11 bg-gradient-to-tr from-[#00F0FF] to-[#7B68EE] rounded-xl shadow-[0_0_25px_rgba(0,240,255,0.4)] flex items-center justify-center transition-all duration-500 group-hover:scale-110">
             <div className="relative">
               <Video size={20} className="text-white" strokeWidth={2.5} />
@@ -149,6 +150,7 @@ const LoginPage = () => {
               />
             </div>
           </div>
+          {/* THIS IS THE "NEXUS" TEXT LOGO */}
           <span className="text-2xl font-black tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-[#00F0FF] via-white to-[#7B68EE]">
             NEXUS
           </span>

@@ -29,7 +29,7 @@ const Explore = () => {
       const results = videos.filter(
         (video) =>
           video.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          video.author.toLowerCase().includes(searchTerm.toLowerCase())
+          video.author.toLowerCase().includes(searchTerm.toLowerCase()),
       );
       setFilteredVideos(results);
     } else {

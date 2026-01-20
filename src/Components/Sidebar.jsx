@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import {
   Video,
   Home,
@@ -13,25 +13,33 @@ import {
   Cpu,
   Film,
   Brain,
-  ListVideo, // Added for Playlists
-  Bookmark, // Added for Watchlist
+  ListVideo,
+  Bookmark,
 } from "lucide-react";
 
 const Sidebar = () => {
+  const navigate = useNavigate();
+
   return (
     <aside className="w-20 lg:w-64 border-r border-white/5 bg-[#0D1223]/50 backdrop-blur-xl flex flex-col p-4 h-screen sticky top-0 shrink-0">
-      {/* LOGO */}
-      <Link
-        to="/"
-        className="flex items-center gap-3 px-2 mb-10 group cursor-pointer"
+      {/* UPDATED LOGO: Exactly like LoginPage */}
+      <div
+        className="flex items-center gap-4 px-2 mb-10 group cursor-pointer"
+        onClick={() => navigate("/")}
       >
-        <div className="w-10 h-10 bg-gradient-to-tr from-[#00F0FF] to-[#7B68EE] rounded-lg flex items-center justify-center shadow-[0_0_15px_rgba(0,240,255,0.3)] group-hover:rotate-12 transition-transform">
-          <Video size={20} className="text-white" />
+        {/* LOGO ICON BOX */}
+        <div className="w-11 h-11 bg-gradient-to-tr from-[#00F0FF] to-[#7B68EE] rounded-xl shadow-[0_0_25px_rgba(0,240,255,0.4)] flex items-center justify-center transition-all duration-500 group-hover:scale-110 shrink-0">
+          <div className="relative">
+            <Video size={20} className="text-white" strokeWidth={2.5} />
+            <Radio size={14} className="absolute -top-2 -right-2 text-white" />
+          </div>
         </div>
+
+        {/* NEXUS TEXT LOGO */}
         <span className="text-2xl font-black tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-[#00F0FF] via-white to-[#7B68EE] lg:block hidden">
           NEXUS
         </span>
-      </Link>
+      </div>
 
       {/* MAIN NAV */}
       <nav className="space-y-1 flex-1 overflow-y-auto no-scrollbar">
@@ -49,21 +57,16 @@ const Sidebar = () => {
         </p>
 
         <SidebarItem to="/history" icon={<Clock size={20} />} label="History" />
-
-        {/* NEW: Playlists Route */}
         <SidebarItem
           to="/playlists"
           icon={<ListVideo size={20} />}
           label="Playlists"
         />
-
-        {/* NEW: Watchlist Route */}
         <SidebarItem
           to="/watchlist"
           icon={<Bookmark size={20} />}
           label="Watchlist"
         />
-
         <SidebarItem to="/liked" icon={<ThumbsUp size={20} />} label="Liked" />
 
         <div className="my-4 border-t border-white/5 mx-2" />
