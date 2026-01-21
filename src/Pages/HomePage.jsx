@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Radio } from "lucide-react";
-import { fetchVideos } from "../api/mockapi";
 import VideoCard from "../Components/VideoCard";
 
+import { fetchVideos } from "../api/mockapi";
 const HomePage = () => {
   const navigate = useNavigate();
   const [videos, setVideos] = useState([]);
