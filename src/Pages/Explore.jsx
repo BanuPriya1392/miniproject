@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, Link } from "react-router-dom";
 import { Play, Filter, Search as SearchIcon } from "lucide-react";
-import { fetchVideos } from "../api/mockapi";
 
+import { fetchVideos } from "../api/mockapi";
 const Explore = () => {
   const [videos, setVideos] = useState([]);
   const [filteredVideos, setFilteredVideos] = useState([]);
