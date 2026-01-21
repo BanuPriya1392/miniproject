@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 // Ensure this points to your new Sheety logic file
-import { fetchVideos } from "../api/mockapi";
+import { fetchVideos } from "../api/videosapi";
 import VideoCard from "../Components/VideoCard";
 
 const CategoryPage = ({ title, category }) => {
