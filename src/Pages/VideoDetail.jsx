@@ -15,7 +15,7 @@ const VideoDetail = () => {
   const [videoData, setVideoData] = useState(null);
   const [relatedVideos, setRelatedVideos] = useState([]);
   const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(
-    location.state?.showDetails || false
+    location.state?.showDetails || false,
   );
 
   // Check if current video is liked by looking at the global state
