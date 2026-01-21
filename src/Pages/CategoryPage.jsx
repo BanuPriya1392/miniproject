@@ -8,6 +8,7 @@ const CategoryPage = ({ title, category }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  //fetching videos
   useEffect(() => {
     let isMounted = true;
 
